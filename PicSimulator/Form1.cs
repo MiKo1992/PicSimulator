@@ -13,9 +13,13 @@ namespace PicSimulator
 {
     public partial class Form1 : Form
     {
+
+        private Main main;
+
         public Form1()
         {
             InitializeComponent();
+            main = new Main(this);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -23,40 +27,21 @@ namespace PicSimulator
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void printFile(ArrayList file)
         {
-            printFile(readFile());
-        }
-
-        private void printFile(ArrayList file)
-        {
-            dataGridView1.Columns.Add("Spalte1", "Inhalt");
+            dataGridView1.Columns.Add("Spalte1", "Code");
 
             foreach (String row in file) {
             dataGridView1.Rows.Add(row);
             }
+
+            dataGridView1.AutoResizeColumn(0);
         }
 
-        private ArrayList readFile()
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String sLine = "";
-            ArrayList arrText = new ArrayList();
-
-            if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                System.IO.StreamReader sr = new
-                System.IO.StreamReader(openFileDialog1.FileName);
-
-                while (sLine != null)
-                {
-                    sLine = sr.ReadLine();
-                    if (sLine != null)
-                        arrText.Add(sLine);
-                }
-                sr.Close();
-            }
-
-            return arrText;
+            dataGridView1.Rows.Clear();
+            main.readFile();
         }
     }
 }
