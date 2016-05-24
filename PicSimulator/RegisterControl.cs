@@ -9,7 +9,6 @@ namespace PicSimulator
 {
     class RegisterControl
     {
-
         ArrayList register = new ArrayList();
 
         public RegisterControl()

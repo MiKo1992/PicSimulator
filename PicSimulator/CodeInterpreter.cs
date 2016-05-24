@@ -35,7 +35,7 @@ namespace PicSimulator
                     command[1] = content.Substring(7, 2);
                     command[2] = content.Split(' ')[23];
                     commands.Add(command);
-                    //Console.WriteLine(command[0] + command[1]);
+                    Console.WriteLine(command[0] + command[1] + " " + command[2]);
 
                 }
             }

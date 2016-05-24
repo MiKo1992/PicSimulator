@@ -19,7 +19,6 @@ namespace PicSimulator
         public Form1()
         {
             InitializeComponent();
-            main = new Main(this);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -43,7 +42,7 @@ namespace PicSimulator
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Clear();
+            reset();
             main.start();
         }
 
@@ -57,9 +56,11 @@ namespace PicSimulator
             consoleLog.AppendText("\n");
         }
 
-        private void consoleLog_TextChanged(object sender, EventArgs e)
+        private void reset()
         {
-
+            dataGridView1.Rows.Clear();
+            consoleLog.Clear();
+            main = new Main(this);
         }
     }
 }
