@@ -10,16 +10,16 @@ namespace PicSimulator
     /// <summary>
     /// The main class for the PicSimulator
     /// </summary>
-    ///
-    /// Author: Michael Kolb
-    /// Version: 1.0
-    /// 
     class Main
     {
         private Form1 userInterface;
         private ArrayList fileContent = new ArrayList();
         private ArrayList commands;
 
+        /// <summary>
+        /// Creates a main object with reference to the Windows Form
+        /// </summary>
+        /// <param name="userInterface"></param>
         public Main(Form1 userInterface)
         {
             this.userInterface = userInterface;
@@ -46,7 +46,7 @@ namespace PicSimulator
         }
 
         /// <summary>
-        /// Returns the fileContent List
+        /// Return's the fileContent List
         /// </summary>
         /// <returns></returns>
         public ArrayList getFileContent()
