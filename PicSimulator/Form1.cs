@@ -14,7 +14,7 @@ namespace PicSimulator
     public partial class Form1 : Form
     {
 
-        private Main main;
+        private Simulator main;
 
         public Form1()
         {
@@ -60,7 +60,7 @@ namespace PicSimulator
         {
             dataGridView1.Rows.Clear();
             consoleLog.Clear();
-            main = new Main(this);
+            main = new Simulator(this);
         }
     }
 }

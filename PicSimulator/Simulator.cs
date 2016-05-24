@@ -10,7 +10,7 @@ namespace PicSimulator
     /// <summary>
     /// The main class for the PicSimulator
     /// </summary>
-    class Main
+    class Simulator
     {
         private Form1 userInterface;
         private ArrayList fileContent = new ArrayList();
@@ -20,7 +20,7 @@ namespace PicSimulator
         /// Creates a main object with reference to the Windows Form
         /// </summary>
         /// <param name="userInterface"></param>
-        public Main(Form1 userInterface)
+        public Simulator(Form1 userInterface)
         {
             this.userInterface = userInterface;
         }

@@ -29,4 +29,3 @@ namespace PicSimulator
         EECON2 = 0x89
     }
 }
-}

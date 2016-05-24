@@ -82,7 +82,6 @@
             this.consoleLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.consoleLog.Size = new System.Drawing.Size(494, 222);
             this.consoleLog.TabIndex = 4;
-            this.consoleLog.TextChanged += new System.EventHandler(this.consoleLog_TextChanged);
             // 
             // consoleLabel
             // 
