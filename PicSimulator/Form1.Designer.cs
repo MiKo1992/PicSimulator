@@ -32,6 +32,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.consoleLog = new System.Windows.Forms.TextBox();
+            this.consoleLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -43,7 +45,7 @@
             this.dataGridView1.Location = new System.Drawing.Point(12, 27);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(919, 239);
+            this.dataGridView1.Size = new System.Drawing.Size(494, 239);
             this.dataGridView1.TabIndex = 1;
             // 
             // menuStrip1
@@ -52,7 +54,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(943, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(518, 24);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -71,12 +73,35 @@
             this.openToolStripMenuItem.Text = "Open ...";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
+            // consoleLog
+            // 
+            this.consoleLog.Location = new System.Drawing.Point(12, 321);
+            this.consoleLog.Multiline = true;
+            this.consoleLog.Name = "consoleLog";
+            this.consoleLog.ReadOnly = true;
+            this.consoleLog.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.consoleLog.Size = new System.Drawing.Size(494, 222);
+            this.consoleLog.TabIndex = 4;
+            this.consoleLog.TextChanged += new System.EventHandler(this.consoleLog_TextChanged);
+            // 
+            // consoleLabel
+            // 
+            this.consoleLabel.AutoSize = true;
+            this.consoleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.consoleLabel.Location = new System.Drawing.Point(12, 293);
+            this.consoleLabel.Name = "consoleLabel";
+            this.consoleLabel.Size = new System.Drawing.Size(123, 25);
+            this.consoleLabel.TabIndex = 5;
+            this.consoleLabel.Text = "Console Log";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(943, 555);
+            this.ClientSize = new System.Drawing.Size(518, 555);
+            this.Controls.Add(this.consoleLabel);
+            this.Controls.Add(this.consoleLog);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -98,6 +123,8 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
+        private System.Windows.Forms.TextBox consoleLog;
+        private System.Windows.Forms.Label consoleLabel;
     }
 }
 

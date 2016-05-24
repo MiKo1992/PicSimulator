@@ -27,10 +27,13 @@ namespace PicSimulator
 
         }
 
+        /// <summary>
+        /// Print a list in dataGridView1
+        /// </summary>
+        /// <param name="file"></param>
         public void printFile(ArrayList file)
         {
             dataGridView1.Columns.Add("Spalte1", "Code");
-
             foreach (String row in file) {
             dataGridView1.Rows.Add(row);
             }
@@ -41,7 +44,22 @@ namespace PicSimulator
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             dataGridView1.Rows.Clear();
-            main.readFile();
+            main.start();
+        }
+
+        /// <summary>
+        /// Print a new line in the ConsoleLog
+        /// </summary>
+        /// <param name="log"></param>
+        public void printLog(String log)
+        {
+            consoleLog.AppendText("saved " + log);
+            consoleLog.AppendText("\n");
+        }
+
+        private void consoleLog_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
