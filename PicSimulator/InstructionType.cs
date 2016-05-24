@@ -11,7 +11,6 @@ namespace PicSimulator
     /// </summary>
     public enum InstructionType
     {
-
         /// Byte-Oriented   Maske: 0011 1111 0000 0000 --> 3F00
         ADDWF = 0x0700,
         ANDWF = 0x0500,
@@ -25,7 +24,7 @@ namespace PicSimulator
         IORWF = 0x0400,
         MOVF = 0x0800,
         MOVWF = 0x0080, //0011 1111 1000 0000 --> 3F80
-        NOP = 0x0000, //0011 1111 1000 0000 --> 3F80
+        NOP = 0x0000, 
         RLF = 0x0D00,
         RRF = 0x0C00,
         SUBWF = 0x0200,
@@ -40,7 +39,7 @@ namespace PicSimulator
         BTFSS = 0x1C00,
 
 
-        /// Literal and control     Mask: 0011 1110 0000 0000
+        /// Literal and control     Mask: 0011 1110 0000 0000 --> 3E00
         ADDLW = 0x3E00,
         ANDLW = 0x3900,
         CALL = 0x2000, //0011 1000 0000 0000

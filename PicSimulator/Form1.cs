@@ -30,9 +30,8 @@ namespace PicSimulator
         /// Print a list in dataGridView1
         /// </summary>
         /// <param name="file"></param>
-        public void printFile(ArrayList file)
+        public void printFile(List<String> file)
         {
-            dataGridView1.Columns.Add("Spalte1", "Code");
             foreach (String row in file) {
             dataGridView1.Rows.Add(row);
             }
@@ -52,7 +51,7 @@ namespace PicSimulator
         /// <param name="log"></param>
         public void printLog(String log)
         {
-            consoleLog.AppendText("saved " + log);
+            consoleLog.AppendText(log);
             consoleLog.AppendText("\n");
         }
 

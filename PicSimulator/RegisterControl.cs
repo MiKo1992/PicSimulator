@@ -9,7 +9,7 @@ namespace PicSimulator
 {
     class RegisterControl
     {
-        ArrayList register = new ArrayList();
+        List<Register> register = new List<Register>();
 
         public RegisterControl()
         {
@@ -36,7 +36,7 @@ namespace PicSimulator
             register.Add(new Register(RegisterTypes.EECON2, 0x00));
         }
 
-        public ArrayList getRegister()
+        public List<Register> getRegister()
         {
             return register;
         }

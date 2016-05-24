@@ -13,8 +13,8 @@ namespace PicSimulator
     class Simulator
     {
         private Form1 userInterface;
-        private ArrayList fileContent = new ArrayList();
-        private ArrayList commands;
+        private List<String> fileContent = new List<String>();
+        private List<Instruction> Instructions;
 
         /// <summary>
         /// Creates a main object with reference to the Windows Form
@@ -32,16 +32,15 @@ namespace PicSimulator
         {
             fileContent = new FileReader().readFile();
             userInterface.printFile(fileContent);
-            commands = new CodeInterpreter().findCommands(fileContent);
-            printLog(commands);
-
+            Instructions = new CodeInterpreter().getInstructions(fileContent);
+            printLog(Instructions);
         }
 
-        private void printLog(ArrayList commands)
+        private void printLog(List<Instruction> commands)
         {
-            foreach(String[] command in commands)
+            foreach(Instruction instruction in commands)
             {
-                userInterface.printLog(command[2]);
+                userInterface.printLog("saved " + instruction.ToString());
             }
         }
 
@@ -49,9 +48,15 @@ namespace PicSimulator
         /// Return's the fileContent List
         /// </summary>
         /// <returns></returns>
-        public ArrayList getFileContent()
+        public List<String> getFileContent()
         {
             return fileContent;
         }
+
+        public Form1 getUserInterface()
+        {
+            return userInterface;
+        }
+
     }
 }

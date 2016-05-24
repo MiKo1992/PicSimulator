@@ -13,10 +13,10 @@ namespace PicSimulator
 
         public FileReader() { }
 
-        public ArrayList readFile()
+        public List<String> readFile()
         {
             String sLine = "";
-            ArrayList fileContent = new ArrayList();
+            List<String> fileContent = new List<String>();
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = ".lst files|*.lst";
 
