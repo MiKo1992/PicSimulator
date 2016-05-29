@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace PicSimulator
 {
-    /// <summary>
-    /// Register of the PicSimulator
-    /// </summary>
-    public enum RegisterTypes
+    public enum RegisterType
     {
         INDF = 0x00,
         TMR0 = 0x01,

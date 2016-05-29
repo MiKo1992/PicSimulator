@@ -9,36 +9,80 @@ namespace PicSimulator
 {
     class RegisterControl
     {
-        List<Register> register = new List<Register>();
+        private int[] register = new int[0xFF + 8];
 
         public RegisterControl()
         {
-            init();
+            this.InitializeRegister();
         }
 
-        private void init()
+        public int this[int i]
         {
-            register.Add(new Register(RegisterTypes.INDF, 0x00));
-            register.Add(new Register(RegisterTypes.TMR0, 0x00));
-            register.Add(new Register(RegisterTypes.PCL, 0x00));
-            register.Add(new Register(RegisterTypes.STATUS, 0x18));
-            register.Add(new Register(RegisterTypes.FSR, 0x00));
-            register.Add(new Register(RegisterTypes.PORTA, 0x00));
-            register.Add(new Register(RegisterTypes.PORTB, 0x00));
-            register.Add(new Register(RegisterTypes.EEDATA, 0x00));
-            register.Add(new Register(RegisterTypes.EEADR, 0x00));
-            register.Add(new Register(RegisterTypes.PCLATH, 0x00));
-            register.Add(new Register(RegisterTypes.INTCON, 0x00));
-            register.Add(new Register(RegisterTypes.OPTION_REG, 0xFF));
-            register.Add(new Register(RegisterTypes.TRISA, 0x1F));
-            register.Add(new Register(RegisterTypes.TRISB, 0xFF));
-            register.Add(new Register(RegisterTypes.EECON1, 0x00));
-            register.Add(new Register(RegisterTypes.EECON2, 0x00));
+            get
+            {
+                return register[i];
+            }
+            set
+            {
+                register[i] = value;
+            }
         }
 
-        public List<Register> getRegister()
+
+        public void InitializeRegister()
+        {
+            Array.Clear(register, 0, register.Length);
+            register[(int)RegisterType.INDF] = 0x00;
+            register[(int)RegisterType.TMR0] = 0x00;
+            register[(int)RegisterType.PCL] = 0x00;
+            register[(int)RegisterType.STATUS] = 0x18;
+            register[(int)RegisterType.FSR] = 0x00;
+            register[(int)RegisterType.PORTA] = 0x00;
+            register[(int)RegisterType.PORTB] = 0x00;
+            register[(int)RegisterType.EEDATA] = 0x00;
+            register[(int)RegisterType.EEADR] = 0x00;
+            register[(int)RegisterType.PCLATH] = 0x00;
+            register[(int)RegisterType.INTCON] = 0x00;
+            register[(int)RegisterType.OPTION_REG] = 0xFF;
+            register[(int)RegisterType.TRISA] = 0x1F;
+            register[(int)RegisterType.TRISB] = 0xFF;
+            register[(int)RegisterType.EECON1] = 0x00;
+            register[(int)RegisterType.EECON2] = 0x00;
+            //Console.Write(register.Length.ToString("X2"));
+            Program.mainForm.ResetStorageSet();
+            Program.mainForm.AddStorageSet(register);
+        }
+
+        public int[] getRegister()
         {
             return register;
+        }
+
+        public int ToggleBit(int address, int bit)
+        {
+            Console.Write("[+] Toggling Bit " + bit + " on address " + address + "\n");
+            Console.Write(" + Address Before: 0x" + register[address].ToString("X2") + "\n");
+            register[address] ^= 1 << bit;
+            Console.Write(" + Address After: 0x" + register[address].ToString("X2") + "\n");
+
+            // Update Storage
+            Program.mainForm.UpdateStorageSet();
+
+            if ((register[address] & (1 << bit)) > 0)
+            {
+                //Console.Write(" + Bit was set to 1\n");
+                return 1;
+            }
+            else
+            {
+                //Console.Write(" + Bit was set to 0\n");
+                return 0;
+            }
+        }
+
+        public void SetRegisterAtAddress(int address, int value)
+        {
+            register[address] = value & 0xFF;
         }
     }
 }

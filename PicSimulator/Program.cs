@@ -8,15 +8,17 @@ namespace PicSimulator
 {
     static class Program
     {
+        public static Form1 mainForm;
+
         /// <summary>
-        /// The main entry point for the application.
+        /// Der Haupteinstiegspunkt für die Anwendung.
         /// </summary>
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(mainForm = new Form1());
         }
     }
 }

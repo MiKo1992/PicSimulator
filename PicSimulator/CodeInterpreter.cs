@@ -31,49 +31,48 @@ namespace PicSimulator
                 if(Char.IsNumber(content[0]))
                 {
                     String[] splitLine = content.Split(' ');
-                    //TODO Save arguments in Instructions
-                    Instructions.Add(new Instruction(ParseCommand(splitLine[1]), int.Parse(splitLine[0], System.Globalization.NumberStyles.HexNumber)));
+                    Instructions.Add(ParseCommand(splitLine[1], int.Parse(splitLine[0], System.Globalization.NumberStyles.HexNumber)));
 
                 }
             }
             return Instructions;
         }
 
-        private InstructionType ParseCommand(String command)
+        private Instruction ParseCommand(String command, int codeLine)
         {
             int value = int.Parse(command, System.Globalization.NumberStyles.HexNumber);
 
             if ((value & 0x3F9F) == 0x0000)
             {
-                return InstructionType.NOP;
+                return new Instruction(InstructionType.NOP, codeLine);
             }
             else if ((value & 0x3FFF) == 0x0064)
             {
-                return InstructionType.CLRWDT;
+                return new Instruction(InstructionType.CLRWDT, codeLine);
             }
             else if ((value & 0x3FFF) == 0x0009)
             {
-                return InstructionType.RETFIE;
+                return new Instruction(InstructionType.RETFIE, codeLine);
             }
             else if ((value & 0x3FFF) == 0x0008)
             {
-                return InstructionType.RETURN;
+                return new Instruction(InstructionType.RETURN, codeLine);
             }
             else if ((value & 0x3FFF) == 0x0063)
             {
-                return InstructionType.SLEEP;
+                return new Instruction(InstructionType.SLEEP, codeLine);
             }
             else if ((value & 0x3000) == 0x0000)
             {
-                return ByteInstruction(value);
+                return ByteInstruction(value, codeLine);
             }
             else if ((value & 0x3000) == 0x1000)
             {
-                return BitInstruction(value);
+                return BitInstruction(value, codeLine);
             }
             else if ((value & 0x3000) >= 0x2000)
             {
-                return LcInstruction(value);
+                return LcInstruction(value, codeLine);
             }
             else
             {
@@ -81,83 +80,111 @@ namespace PicSimulator
             }
         }
 
-        private InstructionType ByteInstruction(int value)
+        private Instruction ByteInstruction(int hexValue, int codeLine)
         {
-            int hexValue = value;
-
             InstructionType type = new InstructionType();
 
             if (Enum.IsDefined(typeof(InstructionType), hexValue & 0x3F80))
             {
                 type = (InstructionType)(hexValue & 0x3F80);
+                if (type == InstructionType.CLRF)
+                {
+                    return new Instruction(type, hexValue & 0x007F);
+                }
             }
 
+            // Check for byte-oriented operations
             else if (Enum.IsDefined(typeof(InstructionType), hexValue & 0x3F00))
             {
                 type = (InstructionType)(hexValue & 0x3F00);
-            }
-            else
-            {
-                throw new Exception("Unknown command"); 
-            }
-            return type;
-        }
 
-        private InstructionType BitInstruction(int value)
-        {
-            InstructionType type;
-            int hexValue = value;
+                if ((hexValue & 0x0080) > 0)
+                {
+                    return new Instruction(type, codeLine, 1, hexValue & 0x007F);
+                }
+                else
+                {
+                    return new Instruction(type, codeLine, 0, hexValue & 0x007F);
+                }
 
-            if (Enum.IsDefined(typeof(InstructionType), hexValue & 0x3C00))
-            {
-                type = (InstructionType)(hexValue & 0x3C00);
-                return type;
             }
             else
             {
                 throw new Exception("Unknown command");
             }
+
+            if (type == InstructionType.MOVWF)
+            {
+                return new Instruction(type, codeLine, hexValue & 0x007F);
+            }
+            return new Instruction(type, codeLine);
         }
 
-        private static InstructionType LcInstruction(int value)
+        private Instruction BitInstruction(int hexValue, int codeLine)
         {
-            int hexValue = value;
+            InstructionType type = new InstructionType();
+            // Check for bit-oriented operations
+            if (Enum.IsDefined(typeof(InstructionType), hexValue & 0x3C00))
+            {
+                type = (InstructionType)(hexValue & 0x3C00);
+            }
+            else
+            {
+                throw new Exception("Unknown command");
+            }
 
+            int argument1 = Convert.ToInt32(Convert.ToString(hexValue, 2).Substring(6, 3), 2);
+            return new Instruction(type, codeLine, argument1, hexValue & 0x007F);
+        }
+
+        private Instruction LcInstruction(int hexValue, int codeLine)
+        {
+            InstructionType type = new InstructionType();
+
+            // Check for CALL
             if ((hexValue & 0x3800) == 0x2000)
             {
-                return InstructionType.CALL;
+                type = InstructionType.CALL;
+                return new Instruction(type, hexValue & 0x07FF);
             }
             else if ((hexValue & 0x3800) == 0x2800)
             {
-                return InstructionType.GOTO;
+                type = InstructionType.GOTO;
+                return new Instruction(type, hexValue & 0x07FF);
             }
             else if ((hexValue & 0x3C00) == 0x3400)
             {
-                return InstructionType.RETLW;
+                type = InstructionType.RETLW;
+
             }
             else if ((hexValue & 0x3C00) == 0x3000)
             {
-                return InstructionType.MOVLW;
+                type = InstructionType.MOVLW;
+
             }
             else if ((hexValue & 0x3E00) == 0x3E00)
             {
-                return InstructionType.ADDLW;
+                type = InstructionType.ADDLW;
+
             }
             else if ((hexValue & 0x3E00) == 0x3C00)
             {
-                return InstructionType.SUBLW;
+                type = InstructionType.SUBLW;
+
             }
             else
             {
                 if (Enum.IsDefined(typeof(InstructionType), hexValue & 0x3F00))
                 {
-                    return (InstructionType)(hexValue & 0x3F00);
+                    type = (InstructionType)(hexValue & 0x3F00);
                 }
                 else
                 {
                     throw new Exception("Unknown command");
                 }
             }
+
+            return new Instruction(type, hexValue & 0x00FF);
         }
     }
 }
